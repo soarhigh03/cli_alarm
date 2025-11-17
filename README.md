@@ -20,36 +20,38 @@ A VSCode extension that monitors your terminal sessions and alerts you when long
 
 ## Installation
 
+### Quick Install (Recommended)
+
+Just run these commands:
+
+```bash
+git clone https://github.com/soarhigh03/cli_alarm.git
+cd cli_alarm
+npm install
+npm run compile
+npm run package
+code --install-extension cli-alarm-0.0.1.vsix
+```
+
+Then reload VSCode and you're done! ✨
+
 ### Development Mode
+
+If you want to develop or modify the extension:
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/cli_alarm.git
+   git clone https://github.com/soarhigh03/cli_alarm.git
    cd cli_alarm
-   ```
-
-2. Install dependencies:
-   ```bash
    npm install
-   ```
-
-3. Compile the extension:
-   ```bash
    npm run compile
    ```
 
-4. Open in VSCode:
+2. Open in VSCode and press `F5`:
    ```bash
    code .
+   # Then press F5 to open Extension Development Host
    ```
-
-5. Press `F5` to open a new VSCode window with the extension loaded
-
-### From VSIX (Coming Soon)
-
-```bash
-code --install-extension cli-alarm-0.0.1.vsix
-```
 
 ## Usage
 
