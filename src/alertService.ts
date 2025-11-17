@@ -85,23 +85,33 @@ export class AlertService {
         duration: number,
         exitCode: number | undefined
     ) {
-        const durationSeconds = Math.round(duration / 1000);
         const includeCommand = this.config.get<boolean>('includeCommandInNotification', true);
         const useSystemNotification = this.config.get<boolean>('useSystemNotification', true);
 
-        let title = 'CLI Alarm - Task Complete';
+        // Format duration in a human-friendly way
+        const durationSeconds = Math.round(duration / 1000);
+        const formattedDuration = this.formatDuration(durationSeconds);
+
+        let title = '';
         let message = '';
 
-        if (includeCommand) {
-            message = `"${commandName}" finished in ${durationSeconds}s`;
-        } else {
-            message = `Task in ${terminal.name} finished in ${durationSeconds}s`;
-        }
+        // Check if command succeeded or failed
+        const isSuccess = exitCode === undefined || exitCode === 0;
 
-        // Add exit code if available and non-zero
-        if (exitCode !== undefined && exitCode !== 0) {
-            title = 'CLI Alarm - Task Failed';
-            message += ` (Exit code: ${exitCode})`;
+        if (isSuccess) {
+            title = '작업이 완료되었어요! 확인해보세요.';
+            if (includeCommand) {
+                message = `${commandName} (${formattedDuration})`;
+            } else {
+                message = `작업이 완료되었습니다 (${formattedDuration})`;
+            }
+        } else {
+            title = '작업이 중단되었어요. 확인해보세요.';
+            if (includeCommand) {
+                message = `${commandName} (${formattedDuration}, 종료 코드: ${exitCode})`;
+            } else {
+                message = `작업이 중단되었습니다 (${formattedDuration}, 종료 코드: ${exitCode})`;
+            }
         }
 
         // Check if running in remote environment
@@ -195,6 +205,26 @@ export class AlertService {
 
         if (action === 'Show Terminal') {
             terminal.show();
+        }
+    }
+
+    private formatDuration(seconds: number): string {
+        if (seconds < 60) {
+            return `${seconds}초`;
+        } else if (seconds < 3600) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            if (remainingSeconds === 0) {
+                return `${minutes}분`;
+            }
+            return `${minutes}분 ${remainingSeconds}초`;
+        } else {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            if (minutes === 0) {
+                return `${hours}시간`;
+            }
+            return `${hours}시간 ${minutes}분`;
         }
     }
 
