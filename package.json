@@ -1,0 +1,104 @@
+{
+  "name": "cli-alarm",
+  "displayName": "CLI Alarm",
+  "description": "Get notified when your CLI tasks complete. Wake me up when the task is done!",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "extensionKind": [
+    "workspace"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "cli-alarm.enable",
+        "title": "CLI Alarm: Enable Monitoring"
+      },
+      {
+        "command": "cli-alarm.disable",
+        "title": "CLI Alarm: Disable Monitoring"
+      },
+      {
+        "command": "cli-alarm.toggle",
+        "title": "CLI Alarm: Toggle Monitoring"
+      },
+      {
+        "command": "cli-alarm.watchCurrentTerminal",
+        "title": "CLI Alarm: Watch Current Terminal"
+      }
+    ],
+    "configuration": {
+      "title": "CLI Alarm",
+      "properties": {
+        "cliAlarm.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable/disable CLI Alarm monitoring"
+        },
+        "cliAlarm.minDuration": {
+          "type": "number",
+          "default": 5,
+          "description": "Minimum command duration (in seconds) to trigger an alarm"
+        },
+        "cliAlarm.showNotification": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show notification when command completes"
+        },
+        "cliAlarm.useSystemNotification": {
+          "type": "boolean",
+          "default": true,
+          "description": "Use system-wide notifications (macOS Notification Center, Windows Action Center, Linux notify-send)"
+        },
+        "cliAlarm.playSound": {
+          "type": "boolean",
+          "default": true,
+          "description": "Play sound when command completes"
+        },
+        "cliAlarm.focusTerminal": {
+          "type": "boolean",
+          "default": false,
+          "description": "Focus terminal when command completes"
+        },
+        "cliAlarm.includeCommandInNotification": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include command name in notification"
+        },
+        "cliAlarm.watchAllTerminals": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically watch all terminals (if false, only watch explicitly marked terminals)"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile",
+    "lint": "eslint src --ext ts",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/node-notifier": "^8.0.5",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "node-notifier": "^10.0.1"
+  }
+}
