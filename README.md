@@ -1,6 +1,8 @@
 # CLI Alarm
 
-> Hey Mac, wake me up when the task is done... only when the task is done!
+![> Hey Mac, wake me up when the task is done... only when the task is done](why_it_all_started.png)
+
+
 
 A VSCode extension that monitors your terminal sessions and alerts you when long-running commands complete. Perfect for those build scripts, test suites, or any CLI task that takes more than a few seconds.
 
